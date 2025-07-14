@@ -75,7 +75,7 @@ export default function CategoriesPage() {
         </button>
       </div>
 
-      {/* Filter Overlay + Sidebar */}
+      {/* Filter Sidebar */}
       <AnimatePresence>
         {isFilterOpen && (
           <>
@@ -97,35 +97,37 @@ export default function CategoriesPage() {
               <h2 className="text-2xl font-bold text-[#7c2b28] mb-6 border-b border-[#7c2b28]/30 pb-2">Filter By</h2>
 
               <div className="space-y-8 text-sm text-gray-800">
-                {(['metal', 'price', 'tag'] as const).map((type) => {
-                  const values = Array.from(new Set(allCategories.map((c) => c[type])));
-                  return (
-                    <motion.div
-                      key={type}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1 }}
-                    >
-                      <h3 className="font-semibold text-md capitalize mb-3 border-l-4 border-[#7c2b28] pl-2">{type}</h3>
-                      <div className="space-y-2">
-                        {values.map((val) => (
-                          <label
-                            key={val}
-                            className="flex items-center gap-3 cursor-pointer hover:text-[#7c2b28] transition"
-                          >
-                            <input
-                              type="checkbox"
-                              checked={filters[type].has(val)}
-                              onChange={() => toggleFilter(type, val)}
-                              className="w-4 h-4 text-[#7c2b28] bg-white border border-gray-300 rounded focus:ring-[#7c2b28] transition"
-                            />
-                            <span>{val}</span>
-                          </label>
-                        ))}
-                      </div>
-                    </motion.div>
-                  );
-                })}
+                <div>
+                  {(['metal', 'price', 'tag'] as const).map((type) => {
+                    const values = Array.from(new Set(allCategories.map((c) => c[type])));
+                    return (
+                      <motion.div
+                        key={type}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                      >
+                        <h3 className="font-semibold text-md capitalize mb-3 border-l-4 border-[#7c2b28] pl-2">{type}</h3>
+                        <div className="space-y-2">
+                          {values.map((val) => (
+                            <label
+                              key={val}
+                              className="flex items-center gap-3 cursor-pointer hover:text-[#7c2b28] transition"
+                            >
+                              <input
+                                type="checkbox"
+                                checked={filters[type].has(val)}
+                                onChange={() => toggleFilter(type, val)}
+                                className="w-4 h-4 text-[#7c2b28] bg-white border border-gray-300 rounded focus:ring-[#7c2b28] transition"
+                              />
+                              <span>{val}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
               </div>
 
               <motion.button
@@ -141,7 +143,7 @@ export default function CategoriesPage() {
         )}
       </AnimatePresence>
 
-      {/* Category Cards with Animations */}
+      {/* Category Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 relative z-10">
         {filteredCategories.length > 0 ? (
           filteredCategories.map((cat, idx) => (

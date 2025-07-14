@@ -46,10 +46,10 @@ export default function AboutSection() {
               content: (
                 <>
                   <p>
-                    <strong>Jewelora</strong> is India's leading destination for <strong>Premium Artificial Jewellery</strong>, combining timeless designs with modern craftsmanship. Our platform brings together elegance, affordability, and artistic expression — giving every woman the chance to sparkle every day.
+                    <strong>Jewelora</strong> is India&rsquo;s leading destination for <strong>Premium Artificial Jewellery</strong>, combining timeless designs with modern craftsmanship. Our platform brings together elegance, affordability, and artistic expression — giving every woman the chance to sparkle every day.
                   </p>
                   <p>
-                    Whether you're dressing up for a wedding, attending a casual outing, or looking for daily wear accents, Jewelora offers the perfect piece. We are proud to design accessories that mirror real jewelry in beauty, yet remain light on the wallet.
+                    Whether you&rsquo;re dressing up for a wedding, attending a casual outing, or looking for daily wear accents, Jewelora offers the perfect piece. We are proud to design accessories that mirror real jewelry in beauty, yet remain light on the wallet.
                   </p>
                   <p>
                     We focus on <strong>design variety, long-lasting finish, skin-safe materials, and expressive styles</strong>. From intricate bridal sets to minimal office-wear studs, every piece reflects attention to detail, quality, and aesthetic value.
