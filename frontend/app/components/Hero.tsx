@@ -36,14 +36,29 @@ export default function Hero() {
         className="absolute inset-0 z-0"
         options={{
           fullScreen: false,
-          background: { color: 'transparent' },
+          background: {
+            color: 'transparent',
+          },
           particles: {
-            number: { value: 40 },
-            size: { value: 1.5 },
-            color: { value: '#ffffff' },
-            opacity: { value: 0.2 },
-            move: { enable: true, speed: 0.3 },
-            shape: { type: 'circle' },
+            number: {
+              value: 40,
+            },
+            size: {
+              value: 1.5,
+            },
+            color: {
+              value: '#ffffff',
+            },
+            opacity: {
+              value: 0.2,
+            },
+            move: {
+              enable: true,
+              speed: 0.3,
+            },
+            shape: {
+              type: 'circle',
+            },
           },
         }}
       />
@@ -81,7 +96,10 @@ export default function Hero() {
 
         <motion.a
           href="#collections"
-          whileHover={{ scale: 1.08, boxShadow: '0 0 20px rgba(255,255,255,0.5)' }}
+          whileHover={{
+            scale: 1.08,
+            boxShadow: '0 0 20px rgba(255,255,255,0.5)',
+          }}
           className="bg-white text-black px-8 py-3 rounded-full font-semibold transition-all shadow-xl"
         >
           Shop Now
