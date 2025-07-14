@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, type Variants, type TargetAndTransition } from 'framer-motion';
 import { FaFilter } from 'react-icons/fa';
 
 const allCategories = [
@@ -14,9 +14,10 @@ const allCategories = [
   { title: 'Brooches', image: '/categories/brooches.jpg', badge: 'Elegant', metal: 'Gold', price: 'Above ₹3000', tag: 'Traditional' },
 ];
 
-const cardVariants = {
+// ✅ Fix for Framer Motion typing error
+const cardVariants: Variants = {
   hidden: { opacity: 0, y: 80, scale: 0.9 },
-  visible: (i: number) => ({
+  visible: (i: number): TargetAndTransition => ({
     opacity: 1,
     y: 0,
     scale: 1,
@@ -55,7 +56,7 @@ export default function CategoriesPage() {
 
   return (
     <main className="relative bg-[#efeee2] text-gray-800 min-h-screen px-4 sm:px-6 py-20 overflow-x-hidden">
-      {/* Heading and Quote */}
+      {/* 🪙 Heading and Quote */}
       <div className="text-center mb-10 px-2">
         <h1 className="text-4xl sm:text-5xl font-extrabold font-display text-gray-900">
           Shop by <span className="text-[#7c2b28]">Category</span>
@@ -65,8 +66,8 @@ export default function CategoriesPage() {
         </p>
       </div>
 
-      {/* Filter Button */}
-      <div className="mb-10 flex justify-start">
+      {/* 🎛️ Filter Button */}
+      <div className="mb-10 flex justify-start sm:justify-end">
         <button
           className="flex items-center gap-2 px-4 py-2 bg-[#7c2b28] text-white rounded-full hover:bg-[#611d1b] transition"
           onClick={() => setFilterOpen(true)}
@@ -75,7 +76,7 @@ export default function CategoriesPage() {
         </button>
       </div>
 
-      {/* Filter Sidebar */}
+      {/* 📱 Filter Sidebar (Mobile/Tablet) */}
       <AnimatePresence>
         {isFilterOpen && (
           <>
@@ -97,37 +98,35 @@ export default function CategoriesPage() {
               <h2 className="text-2xl font-bold text-[#7c2b28] mb-6 border-b border-[#7c2b28]/30 pb-2">Filter By</h2>
 
               <div className="space-y-8 text-sm text-gray-800">
-                <div>
-                  {(['metal', 'price', 'tag'] as const).map((type) => {
-                    const values = Array.from(new Set(allCategories.map((c) => c[type])));
-                    return (
-                      <motion.div
-                        key={type}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                      >
-                        <h3 className="font-semibold text-md capitalize mb-3 border-l-4 border-[#7c2b28] pl-2">{type}</h3>
-                        <div className="space-y-2">
-                          {values.map((val) => (
-                            <label
-                              key={val}
-                              className="flex items-center gap-3 cursor-pointer hover:text-[#7c2b28] transition"
-                            >
-                              <input
-                                type="checkbox"
-                                checked={filters[type].has(val)}
-                                onChange={() => toggleFilter(type, val)}
-                                className="w-4 h-4 text-[#7c2b28] bg-white border border-gray-300 rounded focus:ring-[#7c2b28] transition"
-                              />
-                              <span>{val}</span>
-                            </label>
-                          ))}
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
+                {(['metal', 'price', 'tag'] as const).map((type) => {
+                  const values = Array.from(new Set(allCategories.map((c) => c[type])));
+                  return (
+                    <motion.div
+                      key={type}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 }}
+                    >
+                      <h3 className="font-semibold text-md capitalize mb-3 border-l-4 border-[#7c2b28] pl-2">{type}</h3>
+                      <div className="space-y-2">
+                        {values.map((val) => (
+                          <label
+                            key={val}
+                            className="flex items-center gap-3 cursor-pointer hover:text-[#7c2b28] transition"
+                          >
+                            <input
+                              type="checkbox"
+                              checked={filters[type].has(val)}
+                              onChange={() => toggleFilter(type, val)}
+                              className="w-4 h-4 text-[#7c2b28] bg-white border border-gray-300 rounded focus:ring-[#7c2b28] transition"
+                            />
+                            <span>{val}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </div>
 
               <motion.button
@@ -143,7 +142,7 @@ export default function CategoriesPage() {
         )}
       </AnimatePresence>
 
-      {/* Category Cards */}
+      {/* 🧩 Category Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 relative z-10">
         {filteredCategories.length > 0 ? (
           filteredCategories.map((cat, idx) => (
