@@ -182,7 +182,7 @@ export default function Navbar() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="bg-transparent outline-none text-sm w-full"
                   />
-                  <button onClick={handleSearch} className="text-gray-500 hover:text-[#7c2b28]">
+                  <button onClick={handleSearch} className="text-black hover:text-[#7c2b28]">
                     <FaSearch />
                   </button>
                 </div>

@@ -64,9 +64,9 @@ export default function Hero() {
       />
 
       {/* 💎 Main Hero Content */}
-      <div className="relative z-10 py-28">
+      <div className="relative z-10 py-20 sm:py-28">
         <motion.h1
-          className="text-4xl md:text-6xl font-extrabold font-display mb-4 leading-tight"
+          className="text-3xl sm:text-4xl md:text-6xl font-extrabold font-display mb-4 leading-tight"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
@@ -108,7 +108,7 @@ export default function Hero() {
 
       {/* ⬇️ Scroll-down indicator */}
       <motion.div
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10"
+        className="absolute bottom-20 sm:bottom-6 left-1/2 -translate-x-1/2 z-10"
         animate={{ y: [0, 10, 0] }}
         transition={{ repeat: Infinity, duration: 2 }}
       >
