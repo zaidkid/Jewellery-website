@@ -35,7 +35,7 @@ export default function LoginPage() {
       localStorage.setItem('user', JSON.stringify(userInfo));
       toast.success('Logged in successfully');
       router.push('/');
-    } catch (err) {
+    } catch {
       toast.error('Something went wrong. Please try again.');
     }
   };
