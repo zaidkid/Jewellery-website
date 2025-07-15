@@ -1,4 +1,5 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -8,14 +9,18 @@ import {
   FaSearch,
   FaHome,
   FaInfoCircle,
-  FaPhone
+  FaPhone,
 } from 'react-icons/fa';
+import { useUser } from '../context/UserContext';
+import toast from 'react-hot-toast';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [searchQuery, setSearchQuery] = useState('');
   const [isTop, setIsTop] = useState(true);
+  const router = useRouter();
+  const { user, setUser } = useUser();
 
   const navLinks = [
     { label: 'Home', href: '#hero', id: 'home', icon: <FaHome /> },
@@ -26,6 +31,13 @@ export default function Navbar() {
 
   const handleSearch = () => {
     console.log('Searching:', searchQuery);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    setUser(null);
+    toast.success('Logged out successfully 👋');
+    router.push('/login');
   };
 
   useEffect(() => {
@@ -59,7 +71,6 @@ export default function Navbar() {
       >
         {/* ✅ Mobile Top Navbar */}
         <div className="flex items-center justify-between px-4 py-3 md:hidden">
-          {/* Logo */}
           <h1
             className="text-3xl font-extrabold tracking-wide"
             style={{ fontFamily: 'Playfair Display, serif', color: '#7c2b28' }}
@@ -67,7 +78,6 @@ export default function Navbar() {
             Jewelora
           </h1>
 
-          {/* Search bar */}
           <div className="flex-1 mx-4">
             <div className="bg-gray-100 px-3 py-2 rounded-full flex items-center">
               <FaSearch className="text-black mr-2" />
@@ -81,15 +91,23 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Login/User */}
-          <a href="/login" className="text-gray-700 text-xl">
-            <FaUser />
-          </a>
+          {/* ✅ Mobile Login/Logout */}
+          {user ? (
+            <button
+              onClick={handleLogout}
+              className="text-sm text-red-600 hover:underline"
+            >
+              Sign out
+            </button>
+          ) : (
+            <a href="/login" className="text-gray-700 text-xl">
+              <FaUser />
+            </a>
+          )}
         </div>
 
-        {/* ✅ Desktop Navbar (Unchanged) */}
+        {/* ✅ Desktop Navbar */}
         <div className="max-w-7xl mx-auto px-4 py-4 hidden md:flex items-center justify-between relative">
-          {/* Logo */}
           <h1
             className="text-4xl font-extrabold tracking-wide"
             style={{ fontFamily: 'Playfair Display, serif', color: '#7c2b28' }}
@@ -97,7 +115,6 @@ export default function Navbar() {
             Jewelora
           </h1>
 
-          {/* Search bar */}
           <div className="flex justify-center ml-10 flex-1">
             <div className="w-96 max-w-lg bg-white border border-black px-5 py-2 rounded-full shadow-sm flex items-center">
               <input
@@ -113,7 +130,6 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Desktop Nav Links */}
           <nav className="flex items-center gap-6 ml-12">
             {navLinks.map((link) => (
               <a
@@ -132,15 +148,23 @@ export default function Navbar() {
               </a>
             ))}
 
-            {/* Icons */}
             <div className={`flex gap-4 text-xl ml-6 ${isTop ? 'text-white' : 'text-black'}`}>
-              <a href="/login" className="hover:text-gray-700" aria-label="Login">
-                <FaUser />
-              </a>
+              {user ? (
+                <button
+                  onClick={handleLogout}
+                  className="text-base font-bold text-red-600 hover:underline"
+                >
+                  Log out
+                </button>
+              ) : (
+                <a href="/login" className="hover:text-gray-700" aria-label="Login">
+                  <FaUser />
+                </a>
+              )}
               <a href="#wishlist" className="hover:text-rose-500" aria-label="Wishlist">
                 <FaHeart />
               </a>
-              <a href="#cart" className="hover:text-emerald-500" aria-label="Cart">
+              <a href="/bag" className="hover:text-emerald-500" aria-label="Bag">
                 <FaShoppingCart />
               </a>
             </div>

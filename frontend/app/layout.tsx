@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Playfair_Display } from "next/font/google";
 import "./globals.css";
-
+import { UserProvider } from "./context/UserContext";
+import { Toaster } from 'react-hot-toast';
 // Load fonts
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,7 +18,7 @@ const geistMono = Geist_Mono({
 const playfair = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
-  weight: ["700", "800"], // Optional: can also add "600", "900"
+  weight: ["700", "800"],
   display: "swap",
 });
 
@@ -36,9 +37,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased`}
       >
-        {children}
+        <Toaster position="top-center" reverseOrder={false} />
+        <UserProvider>
+          {children}
+        </UserProvider>
       </body>
     </html>
   );
 }
-
