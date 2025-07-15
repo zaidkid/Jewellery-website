@@ -1,5 +1,4 @@
 'use client';
-
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -135,7 +134,7 @@ export default function Navbar() {
 
             {/* Icons */}
             <div className={`flex gap-4 text-xl ml-6 ${isTop ? 'text-white' : 'text-black'}`}>
-              <a href="#login" className="hover:text-gray-700" aria-label="Login">
+              <a href="/login" className="hover:text-gray-700" aria-label="Login">
                 <FaUser />
               </a>
               <a href="#wishlist" className="hover:text-rose-500" aria-label="Wishlist">
