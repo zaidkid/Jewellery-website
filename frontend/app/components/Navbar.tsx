@@ -103,7 +103,7 @@ export default function Navbar() {
             <div className="w-96 max-w-lg bg-white border border-black px-5 py-2 rounded-full shadow-sm flex items-center">
               <input
                 type="text"
-                placeholder="Search for jewelry..."
+                placeholder="Search for jewellery..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="bg-transparent outline-none w-full text-sm text-black"
@@ -174,7 +174,7 @@ export default function Navbar() {
                     </a>
                   </li>
                 ))}
-                <div className="flex items-center bg-white border border-gray-300 rounded-full px-4 py-2 w-10/12">
+                <div className="flex items-center bg-white border border-gray-300 rounded-full px-4 py-2 w-9/12">
                   <input
                     type="text"
                     placeholder="Search"
