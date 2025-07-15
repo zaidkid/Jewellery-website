@@ -2,8 +2,19 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HiMenuAlt3, HiX } from 'react-icons/hi';
-import { FaHeart, FaShoppingCart, FaUser, FaSearch, FaHome, FaInfoCircle, FaPhone } from 'react-icons/fa';
+import {
+  HiMenuAlt3,
+  HiX
+} from 'react-icons/hi';
+import {
+  FaHeart,
+  FaShoppingCart,
+  FaUser,
+  FaSearch,
+  FaHome,
+  FaInfoCircle,
+  FaPhone
+} from 'react-icons/fa';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,7 +62,38 @@ export default function Navbar() {
           isTop ? 'bg-black text-white' : 'bg-white text-black'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between relative">
+        {/* ✅ Mobile Top Navbar */}
+        <div className="flex items-center justify-between px-4 py-3 md:hidden">
+          {/* Logo */}
+          <h1
+            className="text-2xl font-extrabold tracking-wide"
+            style={{ fontFamily: 'Playfair Display, serif', color: '#7c2b28' }}
+          >
+            Jewelora
+          </h1>
+
+          {/* Search bar */}
+          <div className="flex-1 mx-4">
+            <div className="bg-gray-100 px-3 py-2 rounded-full flex items-center">
+              <FaSearch className="text-gray-500 mr-2" />
+              <input
+                type="text"
+                placeholder="Search..."
+                className="w-full text-sm bg-transparent outline-none"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+          </div>
+
+          {/* Login/User */}
+          <a href="#login" className="text-gray-700 text-xl">
+            <FaUser />
+          </a>
+        </div>
+
+        {/* ✅ Desktop Navbar (Unchanged) */}
+        <div className="max-w-7xl mx-auto px-4 py-4 hidden md:flex items-center justify-between relative">
           {/* Logo */}
           <h1
             className="text-4xl font-extrabold tracking-wide"
@@ -60,8 +102,8 @@ export default function Navbar() {
             Jewelora
           </h1>
 
-          {/* Search bar (Desktop) */}
-          <div className="hidden md:flex justify-center ml-10 flex-1">
+          {/* Search bar */}
+          <div className="flex justify-center ml-10 flex-1">
             <div className="w-96 max-w-lg bg-white border border-black px-5 py-2 rounded-full shadow-sm flex items-center">
               <input
                 type="text"
@@ -76,8 +118,8 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-6 ml-12">
+          {/* Desktop Nav Links */}
+          <nav className="flex items-center gap-6 ml-12">
             {navLinks.map((link) => (
               <a
                 key={link.id}
@@ -108,16 +150,9 @@ export default function Navbar() {
               </a>
             </div>
           </nav>
-
-          {/* Mobile Menu Toggle */}
-          <div className="md:hidden flex items-center text-2xl">
-            <button onClick={() => setIsOpen(!isOpen)} aria-label="Toggle Menu">
-              {isOpen ? <HiX /> : <HiMenuAlt3 />}
-            </button>
-          </div>
         </div>
 
-        {/* Mobile Drawer */}
+        {/* ✅ Mobile Drawer Menu */}
         <AnimatePresence>
           {isOpen && (
             <motion.nav
@@ -161,27 +196,26 @@ export default function Navbar() {
         </AnimatePresence>
       </header>
 
-      {/* 📱 Mobile Bottom Navigation (Like Myntra) */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t shadow-md flex justify-around items-center text-xs py-2">
-        {navLinks.map((link) => (
+      {/* ✅ Bottom Navigation (Mobile only) */}
+      <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t shadow flex justify-around items-center text-xs py-2">
+        {[
+          { id: 'home', label: 'Home', icon: <FaHome />, href: '#hero' },
+          { id: 'collections', label: 'Shop', icon: <FaHeart />, href: '#collections' },
+          { id: 'offers', label: 'Offers', icon: <FaShoppingCart />, href: '#offers' },
+          { id: 'contact', label: 'Support', icon: <FaPhone />, href: '#contact' },
+        ].map((item) => (
           <a
-            key={link.id}
-            href={link.href}
+            key={item.id}
+            href={item.href}
             className={`flex flex-col items-center ${
-              activeSection === link.id ? 'text-[#7c2b28]' : 'text-gray-500'
+              activeSection === item.id ? 'text-[#7c2b28]' : 'text-gray-500'
             }`}
           >
-            <div className="text-xl">{link.icon}</div>
-            {link.label}
+            <div className="text-lg">{item.icon}</div>
+            <span>{item.label}</span>
           </a>
         ))}
-        <a href="#cart" className="flex flex-col items-center text-gray-500">
-          <div className="text-xl">
-            <FaShoppingCart />
-          </div>
-          Cart
-        </a>
-      </div>
+      </nav>
     </>
   );
 }
