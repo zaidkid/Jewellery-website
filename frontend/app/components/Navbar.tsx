@@ -71,7 +71,7 @@ export default function Navbar() {
           {/* Search bar */}
           <div className="flex-1 mx-4">
             <div className="bg-gray-100 px-3 py-2 rounded-full flex items-center">
-              <FaSearch className="text-gray-500 mr-2" />
+              <FaSearch className="text-black mr-2" />
               <input
                 type="text"
                 placeholder="Search..."
