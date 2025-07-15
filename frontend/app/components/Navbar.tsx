@@ -62,7 +62,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between px-4 py-3 md:hidden">
           {/* Logo */}
           <h1
-            className="text-2xl font-extrabold tracking-wide"
+            className="text-3xl font-extrabold tracking-wide"
             style={{ fontFamily: 'Playfair Display, serif', color: '#7c2b28' }}
           >
             Jewelora
@@ -174,7 +174,7 @@ export default function Navbar() {
                     </a>
                   </li>
                 ))}
-                <div className="flex items-center bg-white border border-gray-300 rounded-full px-4 py-2 w-11/12">
+                <div className="flex items-center bg-white border border-gray-300 rounded-full px-4 py-2 w-10/12">
                   <input
                     type="text"
                     placeholder="Search"
@@ -197,8 +197,8 @@ export default function Navbar() {
         {[
           { id: 'home', label: 'Home', icon: <FaHome />, href: '#hero' },
           { id: 'collections', label: 'Shop', icon: <FaHeart />, href: '#collections' },
-          { id: 'offers', label: 'Offers', icon: <FaShoppingCart />, href: '#offers' },
-          { id: 'contact', label: 'Support', icon: <FaPhone />, href: '#contact' },
+          { id: 'Bag', label: 'Bag', icon: <FaShoppingCart />, href: '#Bag' },
+          { id: 'contact', label: 'Contact', icon: <FaPhone />, href: '#contact' },
         ].map((item) => (
           <a
             key={item.id}
