@@ -82,7 +82,7 @@ export default function Navbar() {
           </div>
 
           {/* Login/User */}
-          <a href="#login" className="text-gray-700 text-xl">
+          <a href="/login" className="text-gray-700 text-xl">
             <FaUser />
           </a>
         </div>
