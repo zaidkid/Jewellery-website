@@ -24,10 +24,10 @@ const collections = [
     description: 'Earthy, Chunky & Bold Statement Pieces',
   },
   {
-    title: 'Minimal Gold',
-    image: '/collections/minimal.jpg',
-    link: '#minimal',
-    description: 'Dainty Pieces for Everyday Shine',
+    title: 'Ethnic Essentials',
+    image: '/collections/ethnic.png',
+    link: '#ethnic',
+    description: 'Traditional Touches for Kurtas & Sarees',
   },
   {
     title: 'Wedding Glamour',

@@ -75,7 +75,7 @@ export default function Navbar() {
               <input
                 type="text"
                 placeholder="Search..."
-                className="w-full text-sm bg-transparent outline-none"
+                className="w-full text-sm bg-transparent outline-none text-black"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
