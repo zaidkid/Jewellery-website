@@ -9,6 +9,7 @@ export default function RegisterPage() {
     name: '',
     email: '',
     password: '',
+    confirmPassword: '',
   });
 
   const [loading, setLoading] = useState(false);
@@ -21,8 +22,14 @@ export default function RegisterPage() {
     e.preventDefault();
     setLoading(true);
 
+    if(formData.password != formData.confirmPassword) {
+      alert("Password do not match");
+      setLoading(false);
+      return;
+    }
+
     try {
-      const res = await fetch('https://jewellery-website-ed70.onrender.com/api/auth/register', {
+      const res = await fetch('http://localhost:5000/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -89,6 +96,17 @@ export default function RegisterPage() {
               onChange={handleChange}
               className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#7c2b28]"
             />
+          </div>
+          <div>
+            <label className="block mb-1 text-sm font-medium text-black">Confirm Password</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              required
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#7c2b28]"
+              />
           </div>
 
           <button

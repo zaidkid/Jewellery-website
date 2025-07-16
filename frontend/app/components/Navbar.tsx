@@ -19,6 +19,7 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('home');
   const [searchQuery, setSearchQuery] = useState('');
   const [isTop, setIsTop] = useState(true);
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
   const router = useRouter();
   const { user, setUser } = useUser();
 
@@ -64,6 +65,7 @@ export default function Navbar() {
 
   return (
     <>
+      {/* Top Navbar */}
       <header
         className={`fixed top-0 left-0 w-full z-50 transition-colors duration-500 shadow backdrop-blur-md ${
           isTop ? 'bg-black text-white' : 'bg-white text-black'
@@ -91,7 +93,6 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* ✅ Mobile Login/Logout */}
           {user ? (
             <button
               onClick={handleLogout}
@@ -197,44 +198,76 @@ export default function Navbar() {
                     </a>
                   </li>
                 ))}
-                <div className="flex items-center bg-white border border-gray-300 rounded-full px-4 py-2 w-9/12">
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="bg-transparent outline-none text-sm w-full"
-                  />
-                  <button onClick={handleSearch} className="text-black hover:text-[#7c2b28]">
-                    <FaSearch />
-                  </button>
-                </div>
               </ul>
             </motion.nav>
           )}
         </AnimatePresence>
       </header>
 
-      {/* ✅ Bottom Navigation (Mobile only) */}
-      <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t shadow flex justify-around items-center text-xs py-2">
+      {/* ✅ Bottom Navigation (Mobile with Search Modal Trigger) */}
+      <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t shadow-lg flex justify-around items-center py-2 text-xs">
         {[
-          { id: 'home', label: 'Home', icon: <FaHome />, href: '#hero' },
-          { id: 'collections', label: 'Shop', icon: <FaHeart />, href: '#collections' },
-          { id: 'Bag', label: 'Bag', icon: <FaShoppingCart />, href: '#Bag' },
-          { id: 'contact', label: 'Contact', icon: <FaPhone />, href: '#contact' },
+          { id: 'home', icon: <FaHome />, label: 'Home', href: '#hero' },
+          { id: 'collections', icon: <FaHeart />, label: 'Collection', href: '#collections' },
+          { id: 'bag', icon: <FaShoppingCart />, label: 'Bag', href: '/bag' },
         ].map((item) => (
           <a
             key={item.id}
             href={item.href}
             className={`flex flex-col items-center ${
-              activeSection === item.id ? 'text-[#7c2b28]' : 'text-gray-500'
+              activeSection === item.id ? 'text-[#7c2b28]' : 'text-gray-700'
             }`}
           >
-            <div className="text-lg">{item.icon}</div>
-            <span>{item.label}</span>
+            <div className="text-xl">{item.icon}</div>
+            <span className="text-[10px] mt-1">{item.label}</span>
           </a>
         ))}
+
+        <button
+          type="button"
+          onClick={() => setIsSearchModalOpen(true)}
+          className="flex flex-col items-center text-gray-700"
+        >
+          <FaSearch className="text-xl" />
+          <span className="text-[10px] mt-1">Search</span>
+        </button>
       </nav>
+
+      {/* ✅ Mobile Search Modal */}
+      <AnimatePresence>
+        {isSearchModalOpen && (
+          <motion.div
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '100%' }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[999] bg-white px-4 py-6"
+          >
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-bold">Search</h2>
+              <button
+                type="button"
+                onClick={() => setIsSearchModalOpen(false)}
+                className="text-2xl text-gray-500"
+              >
+                &times;
+              </button>
+            </div>
+
+            <div className="flex items-center border border-gray-300 rounded-full px-4 py-2 shadow">
+              <FaSearch className="text-gray-500 mr-2" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search products..."
+                autoFocus
+                className="w-full outline-none text-sm"
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
