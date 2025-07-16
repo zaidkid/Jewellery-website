@@ -17,7 +17,7 @@ export default function LoginPage() {
     e.preventDefault();
 
     try {
-      const res = await fetch('https://jewellery-website-7xbn.onrender.com', {
+      const res = await fetch('https://jewellery-website-ed70.onrender.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
