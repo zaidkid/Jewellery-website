@@ -32,7 +32,7 @@ export default function ContactPage() {
             Get in Touch
           </h1>
           <p className="text-gray-700 text-center mb-10">
-            We'd love to hear from you. Whether you have a question about products, pricing, or anything else, our team is ready to help.
+            We@apos;d love to hear from you. Whether you have a question about products, pricing, or anything else, our team is ready to help.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
