@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useRouter } from 'next/navigation'; // ✅ Import router
 
 type CartItem = {
   id: number;
@@ -20,6 +21,7 @@ const formatCurrency = (value: number) =>
   }).format(value);
 
 export default function BagPage() {
+  const router = useRouter(); // ✅ Use router
   const [cartItems, setCartItems] = useState<CartItem[]>([
     {
       id: 1,
@@ -57,8 +59,18 @@ export default function BagPage() {
   const totalAmount = subtotal + shipping;
 
   return (
-    <main className="min-h-screen py-20 px-4 md:px-20 bg-gray-100 text-gray-800">
-      <h1 className="text-4xl font-extrabold font-serif mb-20 text-center text-black">Shopping Bag</h1>
+    <main className="min-h-screen py-20 px-4 md:px-20 bg-gray-100 text-gray-800 relative">
+      {/* 🔙 Back Button */}
+      <button
+        onClick={() => router.back()}
+        className="absolute top-6 left-4 text-sm text-blue-600 hover:underline"
+      >
+        ← Back
+      </button>
+
+      <h1 className="text-4xl font-extrabold font-serif mb-20 text-center text-black">
+        Shopping Bag
+      </h1>
 
       {cartItems.length === 0 ? (
         <div className="text-center">
@@ -70,7 +82,10 @@ export default function BagPage() {
             className="mx-auto mb-4"
           />
           <p className="text-lg text-gray-600">Your bag is empty.</p>
-          <Link href="/#collections" className="text-pink-600 hover:underline text-sm mt-2 block">
+          <Link
+            href="/#collections"
+            className="text-pink-600 hover:underline text-sm mt-2 block"
+          >
             ← Continue Shopping
           </Link>
         </div>
@@ -97,19 +112,25 @@ export default function BagPage() {
                   />
                   <div className="flex-1 md:ml-6 mt-4 md:mt-0 w-full">
                     <h2 className="text-lg font-semibold">{item.name}</h2>
-                    <p className="text-sm text-gray-500">{formatCurrency(item.price)}</p>
+                    <p className="text-sm text-gray-500">
+                      {formatCurrency(item.price)}
+                    </p>
                     <div className="flex items-center mt-3 gap-3">
                       <span>Qty:</span>
                       <div className="flex items-center gap-2 border px-2 py-1 rounded">
                         <button
-                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          onClick={() =>
+                            updateQuantity(item.id, item.quantity - 1)
+                          }
                           className="px-2"
                         >
                           -
                         </button>
                         <span>{item.quantity}</span>
                         <button
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          onClick={() =>
+                            updateQuantity(item.id, item.quantity + 1)
+                          }
                           className="px-2"
                         >
                           +
@@ -131,10 +152,14 @@ export default function BagPage() {
 
           {/* Summary */}
           <div className="bg-white p-10 rounded-xl shadow-md border md:w-[400px] sticky top-24">
-            <h3 className="text-2xl font-bold font-serif mb-4 text-black">Order Summary</h3>
+            <h3 className="text-2xl font-bold font-serif mb-4 text-black">
+              Order Summary
+            </h3>
             <div className="flex justify-between mb-2 text-sm">
               <span>Total Items:</span>
-              <span>{cartItems.reduce((sum, item) => sum + item.quantity, 0)}</span>
+              <span>
+                {cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+              </span>
             </div>
             <div className="flex justify-between mb-2 text-sm">
               <span>Subtotal:</span>
@@ -152,13 +177,16 @@ export default function BagPage() {
             <button className="w-full mt-6 bg-[#7c2b28] text-white py-2 px-4 rounded-xl hover:bg-[#5a1e1c] transition">
               Proceed to Checkout
             </button>
-            <Link href="/#collections" className="block text-center mt-4 text-pink-600 hover:underline text-sm">
+            <Link
+              href="/#collections"
+              className="block text-center mt-4 text-pink-600 hover:underline text-sm"
+            >
               ← Continue Shopping
             </Link>
           </div>
         </div>
       )}
-
     </main>
   );
 }
+ 

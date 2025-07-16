@@ -1,12 +1,28 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
+
+import {
+  FaFacebook,
+  FaInstagram,
+  FaTwitter,
+  FaArrowUp,
+  FaChevronDown,
+  FaChevronUp,
+} from 'react-icons/fa';
+import Link from 'next/link';
 
 export default function Footer() {
+  const [openSection, setOpenSection] = useState<string | null>('quick');
+
+  const toggleSection = (section: string) => {
+    setOpenSection(openSection === section ? null : section);
+  };
+
   return (
-    <footer className="bg-[#4B3621] text-white pt-20 pb-10 px-6 relative overflow-hidden">
-      {/* ✨ Soft Glow Background */}
+    <footer className="bg-white text-white pt-16 pb-10 px-6 relative overflow-hidden">
+      {/* ✨ Glow Background */}
       <motion.div
         className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-white rounded-full blur-[140px] z-0 opacity-20"
         initial={{ opacity: 0.15, scale: 0.9 }}
@@ -18,84 +34,101 @@ export default function Footer() {
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
-        {/* 💎 Brand Description */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-        >
-          <h2 className="text-3xl font-bold font-serif mb-4 text-white">Jewelora</h2>
-          <p className="text-gray-200 text-sm font-serif leading-relaxed">
-            Elevate your elegance with handcrafted artificial jewelry made to dazzle and define your unique shine.
-          </p>
-        </motion.div>
+      <div className="relative z-10 max-w-4xl mx-auto space-y-10 text-black">
 
-        {/* 🧭 Quick Navigation */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15, duration: 0.7 }}
-        >
-          <h3 className="text-xl font-semibold font-serif mb-5">Quick Links</h3>
-          <ul className="space-y-3 text-gray-300 text-sm">
-            {[
-              { label: 'Home', href: '#home' },
-              { label: 'Collections', href: '#collections' },
-              { label: 'About', href: '#about' },
-              { label: 'Contact', href: '#contact' },
-            ].map((link) => (
-              <li key={link.label}>
-                <a
-                  href={link.href}
-                  className="relative group transition hover:text-white"
-                >
-                  {link.label}
-                  <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
-
-        {/* 🌐 Social Media Icons */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.7 }}
-        >
-          <h3 className="text-xl font-semibold font-serif mb-5">Connect With Us</h3>
-          <div className="flex justify-center md:justify-start gap-6 text-xl text-gray-300">
-            <a
-              href="#"
-              aria-label="Instagram"
-              className="hover:text-pink-400 transition duration-300 hover:scale-110"
-            >
-              <FaInstagram />
-            </a>
-            <a
-              href="#"
-              aria-label="Facebook"
-              className="hover:text-blue-400 transition duration-300 hover:scale-110"
-            >
-              <FaFacebook />
-            </a>
-            <a
-              href="#"
-              aria-label="Twitter"
-              className="hover:text-cyan-400 transition duration-300 hover:scale-110"
-            >
-              <FaTwitter />
-            </a>
+        {/* SECTION: Quick Links */}
+        <div>
+          <div
+            className="flex justify-between items-center cursor-pointer"
+            onClick={() => toggleSection('quick')}
+          >
+            <h2 className="text-l font-semibold">Quick Links</h2>
+            {openSection === 'quick' ? <FaChevronUp /> : <FaChevronDown />}
           </div>
-        </motion.div>
+          {openSection === 'quick' && (
+            <motion.ul
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              transition={{ duration: 0.3 }}
+              className="mt-4 space-y-2 text-sm text-black"
+            >
+              <li><Link href="/" className="hover:text-black">Home</Link></li>
+              <li><Link href="/collections" className="hover:text-black">Collections</Link></li>
+              <li><Link href="/about" className="hover:text-black">About Us</Link></li>
+              <li><Link href="/contact" className="hover:text-black">Contact</Link></li>
+            </motion.ul>
+          )}
+        </div>
+
+        {/* SECTION: Customer Service */}
+        <div>
+          <div
+            className="flex justify-between items-center cursor-pointer"
+            onClick={() => toggleSection('service')}
+          >
+            <h2 className="text-l font-semibold">Help & Info</h2>
+            {openSection === 'service' ? <FaChevronUp /> : <FaChevronDown />}
+          </div>
+          {openSection === 'service' && (
+            <motion.ul
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              transition={{ duration: 0.3 }}
+              className="mt-4 space-y-2 text-sm text-black"
+            >
+              <li><Link href="/privacy-policy" className="hover:text-white">Privacy Policy</Link></li>
+              <li><Link href="/shipping-policy" className="hover:text-white">Shipping Policy</Link></li>
+              <li><Link href="/terms" className="hover:text-white">Terms & Conditions</Link></li>
+              <li><Link href="/returns" className="hover:text-white">Return & Refund</Link></li>
+              <li><Link href="/faq" className="hover:text-white">FAQs</Link></li>
+            </motion.ul>
+          )}
+        </div>
+
+        {/* SECTION: Our Store */}
+        <div>
+          <div
+            className="flex justify-between items-center cursor-pointer"
+            onClick={() => toggleSection('store')}
+          >
+            <h2 className="text-l font-semibold">Our Store</h2>
+            {openSection === 'store' ? <FaChevronUp /> : <FaChevronDown />}
+          </div>
+          {openSection === 'store' && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              transition={{ duration: 0.3 }}
+              className="mt-4 text-sm text-black space-y-2"
+            >
+              <p>📞 +91 0001100110</p>
+              <p>📧 xyz@gmail.com</p>
+              <p>📍 Lucknow, Uttar Pradesh</p>
+            </motion.div>
+          )}
+        </div>
+
+        {/* Social Icons */}
+        <div className="flex justify-center gap-6 text-xl text-black pt-6 border-t">
+          <a href="#" aria-label="Instagram" className="hover:text-pink-400 transition"><FaInstagram /></a>
+          <a href="#" aria-label="Facebook" className="hover:text-blue-400 transition"><FaFacebook /></a>
+          <a href="#" aria-label="Twitter" className="hover:text-cyan-400 transition"><FaTwitter /></a>
+        </div>
+
+        {/* Copyright */}
+        <div className="text-center text-sm py-8 px-4 text-black pt-4">
+          © {new Date().getFullYear()} <span className="text-white font-semibold">Jewelora</span>. All rights reserved.
+        </div>
       </div>
 
-      {/* 📜 Footer Bottom */}
-      <div className="relative z-10 mt-14 border-t border-[#6b4d33] pt-6 text-center text-sm text-gray-300 tracking-wide">
-        © {new Date().getFullYear()}{' '}
-        <span className="text-white font-semibold">Jewelora</span>. All rights reserved.
-      </div>
+      {/* 🔝 Back to Top */}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className="fixed bottom-24 right-5 p-3 bg-[#7c2b28] text-white rounded-full shadow-lg hover:bg-black transition z-50"
+        aria-label="Back to top"
+      >
+        <FaArrowUp />
+      </button>
     </footer>
   );
 }
