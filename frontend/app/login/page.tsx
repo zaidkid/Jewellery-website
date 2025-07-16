@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useUser } from '../context/UserContext';
-import toast from 'react-hot-toast'; // ✅ Toast import
+import toast from 'react-hot-toast';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -41,7 +41,15 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b bg-[#d4dde0] flex items-center justify-center px-4">
+    <main className="min-h-screen bg-gradient-to-b from-[#e6ecef] to-[#d4dde0] flex items-center justify-center px-4 relative">
+      {/* 🔙 Back Button at top-left */}
+      <button
+        onClick={() => router.back()}
+        className="absolute top-6 left-4 text-sm text-blue-600 hover:underline"
+      >
+        ← Back
+      </button>
+
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}

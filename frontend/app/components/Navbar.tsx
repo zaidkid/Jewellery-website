@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   FaHeart,
-  FaShoppingCart,
+  FaShoppingBag,
   FaUser,
   FaSearch,
   FaHome,
@@ -19,7 +19,7 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('home');
   const [searchQuery, setSearchQuery] = useState('');
   const [isTop, setIsTop] = useState(true);
-  const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const router = useRouter();
   const { user, setUser } = useUser();
 
@@ -65,7 +65,7 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Top Navbar */}
+      {/* ✅ Top Navbar */}
       <header
         className={`fixed top-0 left-0 w-full z-50 transition-colors duration-500 shadow backdrop-blur-md ${
           isTop ? 'bg-black text-white' : 'bg-white text-black'
@@ -73,6 +73,10 @@ export default function Navbar() {
       >
         {/* ✅ Mobile Top Navbar */}
         <div className="flex items-center justify-between px-4 py-3 md:hidden">
+          <button onClick={() => setIsOpen(true)} className="text-2xl font-bold">
+            ☰
+          </button>
+
           <h1
             className="text-3xl font-extrabold tracking-wide"
             style={{ fontFamily: 'Playfair Display, serif', color: '#7c2b28' }}
@@ -80,31 +84,14 @@ export default function Navbar() {
             Jewelora
           </h1>
 
-          <div className="flex-1 mx-4">
-            <div className="bg-gray-100 px-3 py-2 rounded-full flex items-center">
-              <FaSearch className="text-black mr-2" />
-              <input
-                type="text"
-                placeholder="Search..."
-                className="w-full text-sm bg-transparent outline-none text-black"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-          </div>
-
-          {user ? (
-            <button
-              onClick={handleLogout}
-              className="text-sm text-red-600 hover:underline"
-            >
-              Sign out
+           <div className="flex items-center gap-4 text-xl">
+            <button onClick={() => setIsSearchModalOpen(true)} className="hover:text-[#7c2b28]">
+              <FaSearch />
             </button>
-          ) : (
-            <a href="/login" className="text-gray-700 text-xl">
-              <FaUser />
+            <a href="/bag" className="hover:text-[#7c2b28]">
+              <FaShoppingBag />
             </a>
-          )}
+          </div>
         </div>
 
         {/* ✅ Desktop Navbar */}
@@ -166,56 +153,101 @@ export default function Navbar() {
                 <FaHeart />
               </a>
               <a href="/bag" className="hover:text-emerald-500" aria-label="Bag">
-                <FaShoppingCart />
+                <FaShoppingBag />
               </a>
             </div>
           </nav>
         </div>
+      </header>
 
-        {/* ✅ Mobile Drawer Menu */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.nav
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -20, opacity: 0 }}
+      {/* ✅ Mobile Drawer Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Blurry Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden bg-black border-t border-gray-200 shadow"
+              className="fixed inset-0 bg-black/30 backdrop-blur-sm z-[998]"
+              onClick={() => setIsOpen(false)}
+            />
+
+            {/* Drawer Panel */}
+            <motion.aside
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ duration: 0.3 }}
+              className="fixed top-0 left-0 bottom-0 z-[999] w-64 bg-white shadow-lg px-6 py-8 flex flex-col"
             >
-              <ul className="flex flex-col items-center gap-6 py-6">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-bold text-[#7c2b28] font-serif">Menu</h2>
+                <button onClick={() => setIsOpen(false)} className="text-2xl text-gray-800">
+                  &times;
+                </button>
+              </div>
+
+              <ul className="flex flex-col gap-5 text-base font-medium">
                 {navLinks.map((link) => (
                   <li key={link.id}>
                     <a
                       href={link.href}
                       onClick={() => setIsOpen(false)}
-                      className={`text-lg font-semibold ${
+                      className={`flex items-center gap-3 px-2 py-1 rounded-md transition ${
                         activeSection === link.id
-                          ? 'text-[#7c2b28]'
-                          : 'text-gray-300 hover:text-[#7c2b28]'
+                          ? 'text-[#7c2b28] bg-gray-100'
+                          : 'text-gray-800 hover:text-[#7c2b28]'
                       }`}
                     >
-                      {link.label}
+                      <span className="text-lg">{link.icon}</span>
+                      <span>{link.label}</span>
                     </a>
                   </li>
                 ))}
               </ul>
-            </motion.nav>
-          )}
-        </AnimatePresence>
-      </header>
 
-      {/* ✅ Bottom Navigation (Mobile with Search Modal Trigger) */}
+              <hr className="my-6 border-gray-300" />
+
+              <div className="mt-auto">
+                {user ? (
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsOpen(false);
+                    }}
+                    className="w-full py-2 px-4 rounded-full bg-red-100 text-red-600 font-semibold hover:bg-red-200 transition"
+                  >
+                    Log out
+                  </button>
+                ) : (
+                  <a
+                    href="/login"
+                    onClick={() => setIsOpen(false)}
+                    className="w-full block py-2 px-4 rounded-full bg-blue-500 text-white text-center font-semibold hover:bg-[#7c2b28] transition"
+                  >
+                    Login
+                  </a>
+                )}
+              </div>
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* ✅ Bottom Navbar (Mobile Only) */}
       <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t shadow-lg flex justify-around items-center py-2 text-xs">
         {[
           { id: 'home', icon: <FaHome />, label: 'Home', href: '#hero' },
           { id: 'collections', icon: <FaHeart />, label: 'Collection', href: '#collections' },
-          { id: 'bag', icon: <FaShoppingCart />, label: 'Bag', href: '/bag' },
+          { id: 'bag', icon: <FaShoppingBag />, label: 'Bag', href: '/bag' },
         ].map((item) => (
           <a
             key={item.id}
             href={item.href}
             className={`flex flex-col items-center ${
-              activeSection === item.id ? 'text-[#7c2b28]' : 'text-gray-700'
+              activeSection === item.id ? 'text-[#7c2b28]' : 'text-black'
             }`}
           >
             <div className="text-xl">{item.icon}</div>
@@ -233,7 +265,7 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* ✅ Mobile Search Modal */}
+      {/* ✅ Search Modal (Mobile) */}
       <AnimatePresence>
         {isSearchModalOpen && (
           <motion.div
@@ -244,25 +276,25 @@ export default function Navbar() {
             className="fixed inset-0 z-[999] bg-white px-4 py-6"
           >
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-bold">Search</h2>
+              <h2 className="text-lg text-black font-serif font-bold">Search</h2>
               <button
                 type="button"
                 onClick={() => setIsSearchModalOpen(false)}
-                className="text-2xl text-gray-500"
+                className="text-2xl text-black"
               >
                 &times;
               </button>
             </div>
 
             <div className="flex items-center border border-gray-300 rounded-full px-4 py-2 shadow">
-              <FaSearch className="text-gray-500 mr-2" />
+              <FaSearch className="text-black mr-2" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search products..."
                 autoFocus
-                className="w-full outline-none text-sm"
+                className="w-full outline-none text-sm text-black"
               />
             </div>
           </motion.div>

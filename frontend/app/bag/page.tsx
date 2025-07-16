@@ -58,7 +58,7 @@ export default function BagPage() {
 
   return (
     <main className="min-h-screen py-20 px-4 md:px-20 bg-gray-100 text-gray-800">
-      <h1 className="text-5xl font-extrabold font-serif mb-20 text-center text-black">Shopping Bag</h1>
+      <h1 className="text-4xl font-extrabold font-serif mb-20 text-center text-black">Shopping Bag</h1>
 
       {cartItems.length === 0 ? (
         <div className="text-center">
